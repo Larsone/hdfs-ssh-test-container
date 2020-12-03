@@ -1,0 +1,18 @@
+if [[ $# < 3 ]] ; then
+    echo 'Not enough arguments'
+    exit 0
+fi
+
+if [ $1 = 'fs' ] && [ $2 = '-ls' ] && [[ $3 =~ [^\/.*] ]]
+then
+  echo "Found 2 items"
+  echo "-rw-r--r--   1 user hdfs         36 $(date "+%Y-%m-%d") 11:17 ${3}/test_today"
+  echo "-rw-r--r--   1 user hdfs         48 $(date -d "yesterday 11:18" "+%Y-%m-%d") 11:18 ${3}/test_yest"
+elif [ $1 = 'fs' ] && [ $2 = '-lsf' ] && [[ $3 =~ [^\/.*] ]]
+then
+  echo "Found 2 items"
+  echo "-rw-r--r--   1 user hdfs         0 $(date "+%Y-%m-%d") 11:17 ${3}/test_today"
+  echo "-rw-r--r--   1 user hdfs         0 $(date -d "yesterday 11:18" "+%Y-%m-%d") 11:18 ${3}/test_yest"
+else
+  echo 'Wrong arguments - hadoop fs -ls /path'
+fi
